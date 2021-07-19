@@ -31,6 +31,9 @@ stage('Deploy'){
             sh 'echo "Finished this stage"'
         }    
     }
-    
+  
 }
+stage('notifyslack'){
+
+}  
 }
