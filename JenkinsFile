@@ -1,39 +1,21 @@
-node('master') {
-stage('check out code') {
+pipeline {
+    agent any
 
-checkout([$class: 'GitSCM', branches: [[name: 'dev']], extensions: [], userRemoteConfigs: [[credentialsId: 'github', url: 'https://github.com/lidorg-dev/jenkins-course.git']]])}
-
-stage('build something') {
-    
-}
-
-stage('test something') {
-
-
-}
-stage('package'){
-    chuckNorris()
-}
-stage('Deploy'){
-    parallel Deploy_to_Dev: {
-        try {
-            sh 'echo "Deploy to Dev parallel stage"'
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
         }
-        finally {
-            sh 'echo "Finished this stage"'
-        }           
-    },
-    Deploy_to_QA: {
-        try {
-            sh 'echo "Deploy to QA parallel stage"'
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
         }
-        finally {
-            sh 'echo "Finished this stage"'
-        }    
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
     }
-  
-}
-stage('notifyslack'){
-slackSend channel: 'devops_kamatech', message: 'pipeline End'
-}  
 }
